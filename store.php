@@ -5,6 +5,7 @@ License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <?php
+session_start();
 $bool=0;
 	if(isset($_GET['id']))
 	{
@@ -38,7 +39,7 @@ $bool=0;
 				<div class="clear"> </div>
 				<div class="header-top-nav">
 				<ul>
-					<li><a href="index.php">Logout</a></li>
+					<li><a href="logout.php">Logout</a></li>
 					<li><a href="#">My account</a></li>
 					<li><a href="#"><span>shopping cart</span></a></li>
 				</ul>
@@ -58,7 +59,7 @@ $bool=0;
 						<ul>
 								<li><a href="index.php">Home</a></li>
 								<li><a href="about.php">About</a></li>
-								<li><a href="store.php">Store</a></li>
+
 								<li><a href="store.php">Featured</a></li>
 								<li><a href="contact.php">Contact</a></li>
 							</ul>
@@ -80,30 +81,32 @@ $bool=0;
 							if($bool==0)
 							{
 							$i=1;
-							$query=mysqli_query($con,"select price,ram,image,model_name,cid,storage from model");
+							$query=mysqli_query($con,"select price,ram,image,model_name,cid,storage,model_id from model");
 							while($row=mysqli_fetch_row($query))
 							{
 								echo "<ul>
 								<li id=$i>
 									<img src=$row[2] class='items'style='height:250px;'/>
 									<br clear='all' />
+									<a href='single.php?mid=$row[6]'>
 									<div style='background-color:#081230; color:white; height:60px;'>$row[3]</br>Price=$row[0]/-Rs</br>($row[1]GB RAM $row[5]GB Storage)</br></div>
-								</li>
+							</a>	</li>
 								</ul>";
 									$i=$i+1;
 								}
 							}
 							else{
 								$i=1;
-								$query=mysqli_query($con,"select price,ram,image,model_name,cid,storage from model  where cid=$id");
+								$query=mysqli_query($con,"select price,ram,image,model_name,cid,storage,model_id from model  where cid=$id");
 								while($row=mysqli_fetch_row($query))
 								{
 									echo "<ul>
 									<li id=$i>
 										<img src=$row[2] class='items'style='height:250px;'/>
 										<br clear='all' />
+											<a href='single.php?mid=$row[6]'>
 										<div style='background-color:#081230; color:white; height:60px;'>$row[3]</br>Price=$row[0]/-Rs</br>($row[1]GB RAM $row[5]GB Storage)</br></div>
-									</li>
+								</a>	</li>
 									</ul>";
 										$i=$i+1;
 									}
@@ -188,7 +191,7 @@ $bool=0;
 			</div>
 		<div class="clear"> </div>
 
-		
+
 		</div>
 	</body>
 </html>

@@ -80,7 +80,7 @@
   <div class="clear"> </div>
   <div class="header-top-nav">
   <ul>
-        <li><a href="login.php">Logout</a></li>
+        <li><a href="logout.php">Logout</a></li>
         <li><a href="#">My account</a></li>
   </ul>
   </div>

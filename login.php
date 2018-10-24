@@ -99,7 +99,7 @@ after { clear: both; }
       <ul>
         <li><a href="registration.php">Register</a></li>
         <li><a href="login.php">Logout</a></li>
-      
+
       </ul>
     </div>
     <div class="clear"> </div>
@@ -160,12 +160,15 @@ after { clear: both; }
 				session_start();
 				@$_SESSION['sess_user']=$row['uid'];
 				@$_SESSION['sess_name']=$user;
+
                 echo "logged in session started";
                 $type=$row['is_seller'];
                 echo $type;
                 if($type==0){
+                    @$_SESSION['type']=0;
                header("Location: store.php");}
                else{
+                   @$_SESSION['type']=1;
                header("Location: seller.php");
                }
 			}

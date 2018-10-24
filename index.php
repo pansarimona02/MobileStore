@@ -1,5 +1,11 @@
 <!DOCTYPE HTML>
 <?php
+session_start();
+
+if(isset($_SESSION['sess_user']) && $_SESSION['type']==0)
+header("Location: store.php");
+if(isset($_SESSION['sess_user']) && $_SESSION['type']==1)
+header("Location: seller.php");
 $bool=0;
 	if(isset($_GET['id']))
 	{
@@ -84,6 +90,9 @@ $bool=0;
 					</div>
 					<!--End-image-slider---->
 					</div>
+
+
+
 					<div class="clear"> </div>
 	 			 <div class="wrap">
 	 			 <div class="content">
@@ -91,43 +100,52 @@ $bool=0;
 	 				 <div id="wrap" align="center">
 
 	 						 <?php
+
 	 						 $con=mysqli_connect('localhost','root','');
 	 						 mysqli_select_db($con,'hotspot') or die("cannot select DB");
 	 						 if($bool==0)
 	 						 {
 	 						 $i=1;
-	 						 $query=mysqli_query($con,"select price,ram,image,model_name,cid,storage from model");
+	 						 $query=mysqli_query($con,"select price,ram,image,model_name,cid,storage,model_id from model");
 	 						 while($row=mysqli_fetch_row($query))
 	 						 {
+
 	 							 echo "<ul>
 	 							 <li id=$i>
 	 								 <img src=$row[2] class='items'style='height:250px;'/>
 	 								 <br clear='all' />
+									 <a href='single.php?mid=$row[6]'>
 	 								 <div style='background-color:#081230; color:white; height:60px;'>$row[3]</br>Price=$row[0]/-Rs</br>($row[1]GB RAM $row[5]GB Storage)</br></div>
-	 							 </li>
+	 								</a>  </li>
 	 							 </ul>";
 	 								 $i=$i+1;
+
 	 							 }
 	 						 }
 	 						 else{
 	 							 $i=1;
-	 							 $query=mysqli_query($con,"select price,ram,image,model_name,cid,storage from model  where cid=$id");
+	 							 $query=mysqli_query($con,"select price,ram,image,model_name,cid,storage,model_id from model  where cid=$id");
 	 							 while($row=mysqli_fetch_row($query))
 	 							 {
+
 	 								 echo "<ul>
 	 								 <li id=$i>
 	 									 <img src=$row[2] class='items'style='height:250px;'/>
 	 									 <br clear='all' />
+												 <a href='single.php?mid=$row[6]'>
 	 									 <div style='background-color:#081230; color:white; height:60px;'>$row[3]</br>Price=$row[0]/-Rs</br>($row[1]GB RAM $row[5]GB Storage)</br></div>
-	 								 </li>
+	 								</a></li>
 	 								 </ul>";
 	 									 $i=$i+1;
+
 	 								 }
 	 							 }
 	 					 ?>
 	 			 </div>
 	 			 </div>
 	 			 </div>
+
+
 	 			 <?php
 	 				 function getid($name)
 	 				 {
@@ -203,7 +221,7 @@ $bool=0;
 		</div>
 
 		<div class="clear"> </div>
-		
+
 		</div>
 	</body>
 </html>
