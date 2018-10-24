@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2018 at 10:09 PM
+-- Generation Time: Oct 24, 2018 at 06:51 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -91,9 +91,11 @@ CREATE TABLE `seller` (
 --
 
 INSERT INTO `seller` (`seller_name`, `model_id`, `quantity`) VALUES
-('mona', 'A7', 54),
+('mona', 'A7', 254),
 ('mona', '7C', 154),
-('komal', '7C', 110);
+('komal', '7C', 110),
+('MONA', 'F9', 10),
+('komal', 'A7', 300);
 
 -- --------------------------------------------------------
 
@@ -103,18 +105,25 @@ INSERT INTO `seller` (`seller_name`, `model_id`, `quantity`) VALUES
 
 CREATE TABLE `specifications` (
   `com_name` varchar(20) NOT NULL,
-  `model_id` varchar(50) NOT NULL,
-  `memory_slot` varchar(5) NOT NULL,
-  `inbuild_memory` varchar(20) NOT NULL,
-  `external_memory` varchar(20) NOT NULL,
-  `camera` varchar(20) NOT NULL,
-  `network` varchar(20) NOT NULL,
-  `battery` varchar(10) NOT NULL,
-  `display_size` varchar(10) NOT NULL,
-  `weight` varchar(10) NOT NULL,
-  `warranty` varchar(10) NOT NULL,
-  `price` varchar(10) NOT NULL
+  `model_id` varchar(255) NOT NULL,
+  `memory_slot` varchar(255) NOT NULL,
+  `camera` varchar(255) NOT NULL,
+  `network` varchar(255) NOT NULL,
+  `battery` varchar(255) NOT NULL,
+  `display_size` varchar(255) NOT NULL,
+  `weight` varchar(255) NOT NULL,
+  `warranty` varchar(255) NOT NULL,
+  `OS` varchar(255) NOT NULL,
+  `processor` varchar(255) NOT NULL,
+  `clock` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `specifications`
+--
+
+INSERT INTO `specifications` (`com_name`, `model_id`, `memory_slot`, `camera`, `network`, `battery`, `display_size`, `weight`, `warranty`, `OS`, `processor`, `clock`) VALUES
+('Asus', 'M1', 'Dedicated', '5MP+13MP', '4G VoLTE, GSM, 4G LTE, WCDMA', '5000 mAh', '15.21 cm (5.99 inch)', '180 g', 'Brand Warranty of 1 Year Available for Handset and 6 Months for Accessories\r\n', 'Android Oreo 8.1', 'Qualcomm Snapdragon 636 Octa Core', '1.8 GHz');
 
 -- --------------------------------------------------------
 
