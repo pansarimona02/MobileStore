@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<?php
+session_start();
+if(!isset($_SESSION['sess_user']))
+{
+
+	header("location:index.php");
+}
+ $sellerid=$_SESSION['sess_user'];
+?>
 <html>
 <head>
 <meta charset="utf-8">
@@ -97,7 +106,7 @@
     <ul>
       <li><a href="index.php">Home</a></li>
       <li><a href="about.php">About</a></li>
-      <li><a href="store.php">Store</a></li>
+
       <li><a href="store.php">Featured</a></li>
       <li><a href="contact.php">Contact</a></li>
     </ul>
@@ -133,9 +142,9 @@
             </td>
           </tr>
           <tr>
-            <td style="align:center;">Name</td>
+
             <td>
-            <input type="text" name="name">
+            <input type="hidden" name="name"value=<?php echo $sellerid ?> >
             </td>
           </tr>
         </table>
@@ -145,16 +154,16 @@
             <?php
                 if(isset($_POST["submit"])){
                       $quantity=$_POST['quantity'];
-                        $sname=$_POST['name'];
+                      //  $sname=$_POST['name'];
                       $mid=$_POST['input'];
                       $con=mysqli_connect('localhost','root','');
                       mysqli_select_db($con,'hotspot') or die("cannot select DB");
-                     $query=mysqli_query($con,"SELECT * FROM seller WHERE model_id='$mid' and seller_name='$sname'");
+                     $query=mysqli_query($con,"SELECT * FROM seller WHERE model_id='$mid' and seller_id='$sellerid'");
                       $numrows=mysqli_num_rows($query);
                       echo $numrows;
                       if($numrows==0)
                       {
-                          $sql="INSERT INTO seller(seller_name,model_id,quantity) VALUES('$sname','$mid','$quantity')";
+                          $sql="INSERT INTO seller(seller_id,model_id,quantity) VALUES('$sellerid','$mid','$quantity')";
                           $result=mysqli_query($con,$sql);
                           if($result){
                            // header("Location: index.php");
@@ -165,9 +174,10 @@
                           }
                     }
                         else {
-                           $query1=mysqli_query($con,"SELECT * FROM seller WHERE model_id='$mid'");
+                           $query1=mysqli_query($con,"SELECT * FROM seller WHERE model_id='$mid' and seller_id='$sellerid'");
                           $row=mysqli_fetch_row($query1);
-                          $sql="update seller SET quantity=$quantity+$row[2] where model_id='$mid'and seller_name='$sname'";
+                          $val=$quantity+$row[2];
+                          $sql="update seller SET quantity='$val' where model_id='$mid'and seller_id='$sellerid'";
                           $result=mysqli_query($con,$sql);
                           if($result){
                            // header("Location: index.php");

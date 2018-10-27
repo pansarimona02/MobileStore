@@ -15,7 +15,7 @@
    }
    </style>
 
-    <title>Registraytion page</title>
+    <title>Registration page</title>
     <link href="http://getbootstrap.com/docs/3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/docs/3.3/examples/signin/signin.css" rel="stylesheet">
   </head>

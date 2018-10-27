@@ -1,29 +1,22 @@
 <!DOCTYPE HTML>
 <?php
-ob_start();
 session_start();
 $ex=0;
 if(!isset($_SESSION['sess_user']))
 {
-
 	$ex=1;
 }
-else {
-	$cid=$_SESSION['sess_user'];
-}
-
-	if(isset($_GET['mid']))
+	if(isset($_GET['mid1']))
 	{
-		$mid=$_GET['mid'];
-	}
-	else {
-					header("location:index.php");
+
+		$mid=$_GET['mid1'];
+		//echo $mid;
 	}
 ?>
 
 <html>
 	<head>
-		<title>single</title>
+		<title>cart</title>
 
 		<link href="css/style.css" rel="stylesheet" type="text/css"  media="all" />
 		<meta name="keywords" content="Mobilestore iphone web template, Android web template, Smartphone web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
@@ -159,83 +152,46 @@ else {
 							<div class="clear"> </div>
 		    		</div>
 						<div class="brand-history">
-		    			<h3>Description :</h3>	<form method='post'>
-						<table>
-								<tr><td style="padding-right:150px;padding-bottom:5px;">Phone</td>	<td>:</td> <td><?php echo $row[3];?></td></tr>
-								<tr><td style="padding-bottom:5px;">RAM</td>	<td>:</td> <td><?php echo $row[1];?></td></tr>
-								<tr><td style="padding-bottom:5px;">Storage</td>	<td>:</td> <td><?php echo $row[5];?></td></tr>
-								<tr><td style="padding-bottom:5px;">Color</td>	<td>:</td> <td><?php echo $row[5];?></td></tr>
-								<tr><td style="padding-bottom:5px;">Price</td>	<td>:</td> <td><?php echo $row[0];?></td></tr>
-								<tr><td style="padding-bottom:5px;">Memory Slot</td>	<td>:</td> <td><?php echo $row[7];?></td></tr>
-								<tr><td style="padding-bottom:5px;">Camera</td>	<td>:</td> <td><?php echo $row[8];?></td></tr>
-								<tr><td style="padding-bottom:5px;">Network</td>	<td>:</td> <td><?php echo $row[9];?></td></tr>
-								<tr><td style="padding-bottom:5px;">Battery</td>	<td>:</td> <td><?php echo $row[10];?></td></tr>
-								<tr><td style="padding-bottom:5px;">Operating System</td>	<td>:</td> <td><?php echo $row[14];?></td></tr>
-								<tr><td style="padding-bottom:5px;">Processor Type</td>	<td>:</td> <td><?php echo $row[15];?></td></tr>
-								<tr><td style="padding-bottom:5px;">Clock Speed</td>	<td>:</td> <td><?php echo $row[16];?></td></tr>
-								<tr><td style="padding-bottom:5px;">Display Size</td>	<td>:</td> <td><?php echo $row[11];?></td></tr>
-								<tr><td style="padding-bottom:5px;">Weight</td>	<td>:</td> <td><?php echo $row[12];?></td></tr>
-								<tr><td style="padding-bottom:5px;">Warranty</td>	<td>:</td> <td><?php echo $row[13];?></td></tr>
+		    			<h3>Description :</h3>
+		    			<p> <table>
 								<tr>
-									<td style="padding-bottom:5px;">Select Seller</td>	<td>:</td>
-									<td>
+									<tr><td style="padding-right:150px;padding-bottom:5px;">Phone</td>	<td>:</td> <td><?php echo $row[3];?></td></tr>
+									<tr><td style="padding-bottom:5px;">RAM</td>	<td>:</td> <td><?php echo $row[1];?></td></tr>
+									<tr><td style="padding-bottom:5px;">Storage</td>	<td>:</td> <td><?php echo $row[5];?></td></tr>
+									<tr><td style="padding-bottom:5px;">Color</td>	<td>:</td> <td><?php echo $row[5];?></td></tr>
+									<tr><td style="padding-bottom:5px;">Price</td>	<td>:</td> <td><?php echo $row[0];?></td></tr>
 
-									<select name="seller_detail" id="sell">
-									<?php
-									$i=1;
-									$query=mysqli_query($con,"select u.name,u.city,s.seller_id from seller s, user u WHERE s.model_id='$mid' and s.seller_id=u.uid");
-									while($srow=mysqli_fetch_row($query))
-									{	echo" <option id=$i value='$srow[2]'>$srow[0]  $srow[1]</option>";
-										$i=$i+1;
-									}?>
-									</select>
-								</td>
-								</tr>
-							</table>
 
-							<button name="butt">AddToCart</button></form>
+							</table></p>
+							<button onclick="myFunction()">AddToCart</button>
 							<?php
-							if(isset($_POST['butt']))
-							{
-								if($ex==1){
-										echo "<script type='text/javascript'>	function myFunction() {alert('Please login!')	}</script>";}
-								 else
-								 {
-									 $sid=$_POST['seller_detail'];
-									 $con=mysqli_connect('localhost','root','');
-									 mysqli_select_db($con,'hotspot') or die("cannot select DB");
-
-											 $sql="INSERT INTO cart(cid,sid,pid,date) VALUES('$cid','$sid','$mid',CURDATE())";
-											 $result=mysqli_query($con,$sql);
-											 if($result){
-												header("Location: cart.php?mid1=$mid");
-												 //echo "<script type='text/javascript'>alert('Your Product Added successfully!')</script>";
-												 //location.replace('cart.php?mid1=$mid');
-											 }
-											 else {
-											 echo "<script type='text/javascript'>alert('Failure!')</script>";
-											 }
-								 }
-
-							}
-	              ?>
+												if($ex==1){
+														echo "<script type='text/javascript'>	function myFunction() {alert('Please login!')	}</script>";}
+												 else {
+													 		echo "<script>
+	 											 		function myFunction() {
+	     											location.replace('https://www.w3schools.com')
+	 												}
+	 												</script>";}
 
 
-
-
-
-
-
-
-
-
+							?>
 		    		</div>
 						</div>
 
 
 		    		<div class="clear"> </div>
 
-
+						<div class="menu_container">
+						<p class="menu_head">Lorem Ipsum<span class="plusminus">+</span></p>
+							<div class="menu_body" style="display: none;">
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+							</div>
+						<p class="menu_head">About Product<span class="plusminus">+</span></p>
+							<div class="menu_body" style="display: none;">
+							<p>theonlytutorials.com is providing a great varitey of tutorials and scripts to use it immediate on any project!</p>
+							</div>
+					</div>
 			</div>
   	</div>
 
@@ -253,32 +209,7 @@ else {
 								 }
 							 ?>
 
-							<div class="content-sidebar">
-								<h4>Categories</h4>
-								<ul>
 
-									<li><?php $a="Asus"; $id=getid($a);echo "<a href='index.php?id=$id'>" ?>Asus Mobiles</a></li>
-									<li><?php $a="Oppo"; $id=getid($a);echo "<a href='index.php?id=$id'>" ?>Oppo Mobile</a></li>
-									<li><?php $a="Asus"; $id=getid($a);echo "<a href='index.php?id=$id'>" ?>Samsung Mobiles</a></li>
-									<li><?php $a="Motorola"; $id=getid($a);echo "<a href='index.php?id=$id'>" ?>Motorola Mobiles</a></li>
-									<li><?php $a="Nokia"; $id=getid($a);echo "<a href='index.php?id=$id'>" ?>Nokia Mobiles</a></li>
-									<li><?php $a="Honor"; $id=getid($a);echo "<a href='index.php?id=$id'>" ?>Honor Mobiles</a></li>
-
-									<li><a href="#">Apple Mobiles</a></li>
-									<li><a href="#">Lenovo Mobiles</a></li>
-									<li><a href="#">Google Mobile</a></li>
-									<li><a href="#">Fly Mobile</a></li>
-									<li><a href="#">Fujezone Mobiles </a></li>
-									<li><a href="#">HTC</a></li>
-									<li><a href="#">LG Mobiles</a></li>
-									<li><a href="#">Longtel Mobile</a></li>
-									<li><a href="#">Maxx</a></li>
-									<li><a href="#">Micromax Mobiles </a></li>
-									<li><a href="#">Samsung Mobiles</a></li>
-									<li><a href="#">Sony Ericsson Mobiles</a></li>
-									<li><a href="#">Wynncom Mobiles</a></li>
-								</ul>
-							</div>
 		    </div>
 		    <div class="clear"> </div>
 		    </div>
@@ -316,6 +247,12 @@ else {
 				</div>
 			</div>
 		</div>
-
+		<div class="clear"> </div>
+		<div class="wrap">
+		<div class="copy-right">
+			<p>&copy; 2013 Mobile Store. All Rights Reserved | Design by  <a href="http://w3layouts.com/">W3Layouts</a></p>
+		</div>
+		</div>
+		</div>
 	</body>
 </html>

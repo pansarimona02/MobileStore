@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2018 at 06:51 PM
+-- Generation Time: Oct 27, 2018 at 07:08 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -21,6 +21,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `hotspot`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `cid` int(11) UNSIGNED NOT NULL,
+  `sid` int(11) NOT NULL,
+  `pid` varchar(255) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`cid`, `sid`, `pid`, `date`) VALUES
+(7, 5, 'M1', '2018-10-27');
 
 -- --------------------------------------------------------
 
@@ -81,7 +101,7 @@ INSERT INTO `model` (`model_id`, `cid`, `image`, `model_name`, `ram`, `storage`,
 --
 
 CREATE TABLE `seller` (
-  `seller_name` varchar(255) NOT NULL,
+  `seller_id` int(11) UNSIGNED NOT NULL,
   `model_id` varchar(255) NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -90,12 +110,9 @@ CREATE TABLE `seller` (
 -- Dumping data for table `seller`
 --
 
-INSERT INTO `seller` (`seller_name`, `model_id`, `quantity`) VALUES
-('mona', 'A7', 254),
-('mona', '7C', 154),
-('komal', '7C', 110),
-('MONA', 'F9', 10),
-('komal', 'A7', 300);
+INSERT INTO `seller` (`seller_id`, `model_id`, `quantity`) VALUES
+(6, '7C', 56),
+(5, 'M1', 25);
 
 -- --------------------------------------------------------
 
@@ -150,9 +167,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`uid`, `username`, `name`, `phone`, `email`, `password`, `address`, `city`, `state`, `pin`, `is_seller`) VALUES
-(5, 'mona', 'MONA KUMARI', 8565985867, 'mona.2016ca11@gmail.com', '1234', NULL, NULL, NULL, NULL, 1),
-(6, 'komal', 'KOMAL ', 123456789, 'komal@gmail.com', '4321', NULL, NULL, NULL, NULL, 1),
-(7, 'manisha', 'mani', 2345678, 'asd', '8765', NULL, NULL, NULL, NULL, 0);
+(5, 'mona', 'MONA KUMARI', 8565985867, 'mona.2016ca11@gmail.com', '1234', 'RN: 317, IH-B girl\'s hostel, MNNIT', 'ALLAHABAD', 'BIHAR', 854327, 1),
+(6, 'komal', 'KOMAL ', 123456789, 'komal@gmail.com', '4321', 'RN: 316 MNNIT', 'Pillibigh', 'Uttar Pradesh', 211004, 1),
+(7, 'manisha', 'mani', 2345678, 'asd', '8765', 'Room No: 316 IH-B MNNIT', 'Allahabd', 'UP', 211001, 0),
+(8, 'abc', 'abcd', 9161759716, 'monishakram@gmail.com', '12345', NULL, NULL, NULL, NULL, 1);
 
 --
 -- Indexes for dumped tables
@@ -176,7 +194,8 @@ ALTER TABLE `model`
 -- Indexes for table `seller`
 --
 ALTER TABLE `seller`
-  ADD KEY `model_id` (`model_id`);
+  ADD KEY `model_id` (`model_id`),
+  ADD KEY `seller_id` (`seller_id`);
 
 --
 -- Indexes for table `user`
@@ -199,7 +218,7 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `uid` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `uid` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -215,7 +234,8 @@ ALTER TABLE `model`
 -- Constraints for table `seller`
 --
 ALTER TABLE `seller`
-  ADD CONSTRAINT `seller_ibfk_1` FOREIGN KEY (`model_id`) REFERENCES `model` (`model_id`);
+  ADD CONSTRAINT `seller_ibfk_1` FOREIGN KEY (`model_id`) REFERENCES `model` (`model_id`),
+  ADD CONSTRAINT `seller_ibfk_2` FOREIGN KEY (`seller_id`) REFERENCES `user` (`uid`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
