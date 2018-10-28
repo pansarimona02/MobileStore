@@ -35,7 +35,7 @@ if(!isset($_SESSION['sess_user']))
       td {
           padding-top: .8em;
           padding-bottom: .8em;
-          padding-left: 150px;
+          padding-left: 30px;
       }
       body {
         background: #f8f8f8;
@@ -57,7 +57,7 @@ if(!isset($_SESSION['sess_user']))
       after { clear: both; }
       #login {
         margin: 20px auto;
-        width: 800px;
+        width: 600px;
       }
       #login form {
         margin: auto;
@@ -85,16 +85,6 @@ if(!isset($_SESSION['sess_user']))
       </style>
 </head>
 <body>
-  <div class="header">
-  <div class="clear"> </div>
-  <div class="header-top-nav">
-  <ul>
-        <li><a href="logout.php">Logout</a></li>
-        <li><a href="#">My account</a></li>
-  </ul>
-  </div>
-  <div class="clear"> </div>
-  </div>
 
   <div class="top-header">
       <div class="wrap">
@@ -105,17 +95,16 @@ if(!isset($_SESSION['sess_user']))
   <div class="top-nav">
     <ul>
       <li><a href="index.php">Home</a></li>
-      <li><a href="about.php">About</a></li>
-
-      <li><a href="store.php">Featured</a></li>
-      <li><a href="contact.php">Contact</a></li>
+			<li><a href="logout.php">Logout</a></li>
+			<li><a href="#">My account</a></li>
     </ul>
   </div>
   <div class="clear"> </div>
   </div>
   </div>
+
     <div id="login">
-      <form method="POST">
+    <form method="POST">
           <table style="width:800px;">
           <tr>
             <td style="align:center;">Comapany</td>
@@ -126,30 +115,28 @@ if(!isset($_SESSION['sess_user']))
             mysqli_select_db($con,'hotspot') or die("cannot select DB");
             $i=1;
             $query=mysqli_query($con,"select model_name,ram,storage,price,model_id from model");
+						echo "<option>selelct product</option>";
             while($row=mysqli_fetch_row($query))
             {
               echo" <option id=$i value='$row[4]'>$row[0]  $row[1]GB RAM $row[2]GB Storage $row[3]/- Rs</option>";
-
               $i=$i+1;
             }?>
           </select>
-            </td>
+          </td>
           </tr>
+
           <tr>
             <td style="align:center;">Quantity</td>
-            <td>
-            <input type="text" name="quantity">
-            </td>
+            <td><input type="text" name="quantity"> </td>
           </tr>
-          <tr>
 
-            <td>
-            <input type="hidden" name="name"value=<?php echo $sellerid ?> >
-            </td>
+				  <tr>
+		      <td> <input type="hidden" name="name"value=<?php echo $sellerid ?>></td>
           </tr>
-        </table>
-        <br/>
-            <input type="submit" value="Add Product" name="submit">
+         </table>
+         <br/>
+
+        <input type="submit" value="Add Product" name="submit">
       </form>
             <?php
                 if(isset($_POST["submit"])){
@@ -158,7 +145,7 @@ if(!isset($_SESSION['sess_user']))
                       $mid=$_POST['input'];
                       $con=mysqli_connect('localhost','root','');
                       mysqli_select_db($con,'hotspot') or die("cannot select DB");
-                     $query=mysqli_query($con,"SELECT * FROM seller WHERE model_id='$mid' and seller_id='$sellerid'");
+                      $query=mysqli_query($con,"SELECT * FROM seller WHERE model_id='$mid' and seller_id='$sellerid'");
                       $numrows=mysqli_num_rows($query);
                       echo $numrows;
                       if($numrows==0)
@@ -173,7 +160,7 @@ if(!isset($_SESSION['sess_user']))
                           echo "<script type='text/javascript'>alert('Failure!')</script>";
                           }
                     }
-                        else {
+                    else {
                            $query1=mysqli_query($con,"SELECT * FROM seller WHERE model_id='$mid' and seller_id='$sellerid'");
                           $row=mysqli_fetch_row($query1);
                           $val=$quantity+$row[2];
@@ -183,23 +170,10 @@ if(!isset($_SESSION['sess_user']))
                            // header("Location: index.php");
                             echo "<script type='text/javascript'>alert('Your this Product Added successfully!')</script>";}
                             else {
-
                           echo "<script type='text/javascript'>alert('hi Failure!')</script>";
                           }
-                        }
-                   }
-
-                else {
-                  echo "<script type='text/javascript'>alert('All fields are required!')</script>";
-                }
-
+                    }
+               }
               ?>
-
-
-
-
-
-
-
 </body>
 </html>

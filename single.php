@@ -78,7 +78,7 @@ else {
 							<li><a href='#'>Delivery</a></li>
 							<li><a href='#'>Checkout</a></li>
 							<li><a href='#'>My account</a></li>
-							<li><a href='#'><span>shopping cart&nbsp;&nbsp;: </span></a><label> &nbsp;noitems</label></li>";
+							<li><a href='cart.php'><span>shopping cart</a></li>";
 						}?>
 				</ul>
 			</div>
@@ -204,19 +204,32 @@ else {
 									 $sid=$_POST['seller_detail'];
 									 $con=mysqli_connect('localhost','root','');
 									 mysqli_select_db($con,'hotspot') or die("cannot select DB");
+									 $query=mysqli_query($con,"select * from cart where cid='$cid' and  pid='$mid' and sid='$sid'");
+									 $numrows=mysqli_num_rows($query);
 
-											 $sql="INSERT INTO cart(cid,sid,pid,date) VALUES('$cid','$sid','$mid',CURDATE())";
-											 $result=mysqli_query($con,$sql);
-											 if($result){
-												header("Location: cart.php?mid1=$mid");
-												 //echo "<script type='text/javascript'>alert('Your Product Added successfully!')</script>";
-												 //location.replace('cart.php?mid1=$mid');
-											 }
-											 else {
-											 echo "<script type='text/javascript'>alert('Failure!')</script>";
-											 }
+													if($numrows<1){
+														$sql="INSERT INTO cart(cid,sid,pid,date) VALUES('$cid','$sid','$mid',CURDATE())";
+														$result=mysqli_query($con,$sql);
+														if($result){
+														 			header("Location: cart.php");
+																	}
+														else {
+																	echo "<script type='text/javascript'>alert('Failure!')</script>";
+																	}
+													}
+													else {
+														$row=mysqli_fetch_row($query);
+													 $val=$row[4]+1;
+                           $sql="update cart SET quantity='$val' where cid='$cid' and  pid='$mid' and sid='$sid'";
+                           $result=mysqli_query($con,$sql);
+                           if($result){
+                            			echo "<script type='text/javascript'>alert('Your this Product Added successfully!')</script>";
+																		header("Location: cart.php");}
+                             else {
+                           				echo "<script type='text/javascript'>alert('hi Failure!')</script>";
+                           				}
+													}
 								 }
-
 							}
 	              ?>
 
