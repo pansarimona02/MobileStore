@@ -113,6 +113,7 @@ header(location:index.php);
             }
             else
             {
+             $pass = hash('sha256', (get_magic_quotes_gpc() ? stripslashes($passward) : $passward));
 						$count=0;
 							$con=mysqli_connect('localhost','root','');
               mysqli_select_db($con,'hotspot') or die("cannot select DB");
