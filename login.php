@@ -21,15 +21,7 @@ if(isset($_SESSION['sess_user']))
 
 </head>
 <body>
-  <div class="header">
-    <div class="clear"> </div>
-    <div class="header-top-nav">
-      <ul>
-        <li><a href="registration.php">Register</a></li>
-      </ul>
-    </div>
-    <div class="clear"> </div>
-  </div>
+  
 
   <div class="clear"> </div>
   <div class="top-header">
@@ -41,10 +33,8 @@ if(isset($_SESSION['sess_user']))
   <div class="top-nav">
     <ul>
       <li><a href="index.php">Home</a></li>
-      <li><a href="about.php">About</a></li>
-      <li><a href="store.php">Store</a></li>
-      <li><a href="store.php">Featured</a></li>
-      <li><a href="contact.php">Contact</a></li>
+        <li><a href="store.php">Store</a></li>
+        <li><a href="registration.php">Register</a></li>
     </ul>
   </div>
   <div class="clear"> </div>

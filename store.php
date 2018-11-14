@@ -1,9 +1,10 @@
 
 <?php
 session_start();
-
+$ex=0;
 if(!isset($_SESSION['sess_user']))
 {
+		$ex=1;
 	header("location:index.php");
 }
 $bool=0;
@@ -39,9 +40,7 @@ $bool=0;
 				<div class="clear"> </div>
 				<div class="header-top-nav">
 				<ul>
-					<li><a href="logout.php">Logout</a></li>
-					<li><a href="#">My account</a></li>
-					<li><a href="#"><span>shopping cart</span></a></li>
+
 				</ul>
 				</div>
 			<div class="clear"> </div>
@@ -57,12 +56,15 @@ $bool=0;
 				<!----start-top-nav---->
 					<div class="top-nav">
 						<ul>
-								<li><a href="index.php">Home</a></li>
-								<li><a href="about.php">About</a></li>
-
-								<li><a href="store.php">Featured</a></li>
-								<li><a href="contact.php">Contact</a></li>
-							</ul>
+							<li><a href="index.php">Home</a></li>
+							<?php
+								if($ex==1)
+										echo "<li><a href='login.php'>login</a></li>";
+								else {
+									echo "<li><a href='logout.php'>logout</a></li>
+												<li><a href='cart.php'><span>shopping cart</a></li>";
+								}?>
+						</ul>
 					</div>
 				<div class="clear"> </div>
 			</div>
@@ -135,19 +137,7 @@ $bool=0;
 							<li><?php $a="Motorola"; $id=getid($a);echo "<a href='store.php?id=$id'>" ?>Motorola Mobiles</a></li>
 							<li><?php $a="Nokia"; $id=getid($a);echo "<a href='store.php?id=$id'>" ?>Nokia Mobiles</a></li>
 							<li><?php $a="Honor"; $id=getid($a);echo "<a href='store.php?id=$id'>" ?>Honor Mobiles</a></li>
-							<li><a href="#">Apple Mobiles</a></li>
-							<li><a href="#">Lenovo Mobiles</a></li>
-							<li><a href="#">Google Mobile</a></li>
-							<li><a href="#">Fly Mobile</a></li>
-							<li><a href="#">Fujezone Mobiles </a></li>
-							<li><a href="#">HTC</a></li>
-							<li><a href="#">LG Mobiles</a></li>
-							<li><a href="#">Longtel Mobile</a></li>
-							<li><a href="#">Maxx</a></li>
-							<li><a href="#">Micromax Mobiles </a></li>
-							<li><a href="#">Samsung Mobiles</a></li>
-							<li><a href="#">Sony Ericsson Mobiles</a></li>
-							<li><a href="#">Wynncom Mobiles</a></li>
+					
 						</ul>
 		    	</div>
 		    </div>
@@ -155,6 +145,6 @@ $bool=0;
 		    </div>
 
 		<!--footer-->
-		
+
 	</body>
 </html>

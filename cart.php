@@ -58,17 +58,7 @@ else {
 		<div class="header">
 		<div class="clear"> </div>
 		<div class="header-top-nav">
-				<ul>
-					<?php
-						if($ex==1)
-								echo "<li><a href='login.php'>login</a></li>";
-						else {
-							echo "<li><a href='logout.php'>logout</a></li>
-							<li><a href='#'>Delivery</a></li>
-							<li><a href='#'>Checkout</a></li>
-							<li><a href='#'>My account</a></li>";
-						}?>
-				</ul>
+
 	  </div>
 		<div class="clear"> </div>
 		</div>
@@ -83,11 +73,15 @@ else {
 		<!----start-top-nav---->
 		<div class="top-nav">
 			<ul>
-				<li><a href="index.php">Home</a></li>
-				<li><a href="about.php">About</a></li>
-				<li><a href="store.php">Store</a></li>
-				<li><a href="store.php">Featured</a></li>
-				<li><a href="contact.php">Contact</a></li>
+
+	<li><a href="index.php">Home</a></li>
+	<li><a href="store.php">Store</a></li>
+					<?php
+						if($ex==1)
+								echo "<li><a href='login.php'>login</a></li>";
+						else {
+							echo "<li><a href='logout.php'>logout</a></li>";
+						}?>
 			</ul>
 		</div>
 		<div class="clear"> </div>
@@ -101,25 +95,21 @@ else {
 		    <div class="content">
 		    <div class="content-grids">
 	    	<div class="details-page">
-		    <div class="back-links">
-		    			<ul>
-		    				<li><a href="#">Home</a><img src="images/arrow.png" alt=""></li>
-		    				<li><a href="#">Product</a><img src="images/arrow.png" alt=""></li>
-		    				<li><a href="#">Product-Details</a><img src="images/arrow.png" alt=""></li>
-		    			</ul>
-		    </div>
+
 		    </div>
 
 							<?php
+							$total=0;
 								 $con=mysqli_connect('localhost','root','');
 								 mysqli_select_db($con,'hotspot') or die("cannot select DB");
-							   $query1=mysqli_query($con,"select  address,city,state,pin,phone,name from user where uid='$cid'");
+							   $query1=mysqli_query($con,"select address,city,state,pin,phone,name from user where uid='$cid'");
 								 $row1=mysqli_fetch_row($query1);
-								 $query=mysqli_query($con,"select c.sid,c.pid,c.date,m.price,m.image,m.model_name,c.quantity,m.ram,m.storage,m.color from cart c, model m where c.cid='$cid' and m.model_id=c.pid");
+								 $query=mysqli_query($con,"select c.sid,c.pid,c.date,m.price,m.image,m.model_name,m.ram,m.storage,m.color from cart c, model m where c.cid='$cid' and m.model_id=c.pid");
 
 								  $i=1;
 		              while($row=mysqli_fetch_row($query))
 		             {
+									  $total=$total+$row[3];
 		               echo" <div class='detalis-image'>
  										 		 <div class='flexslider' style='align:center;'><img src=$row[4] class='items'style='height:200px; align:center;'/>
 									 		 	 </div>
@@ -131,14 +121,14 @@ else {
 											 <div class='left-value-details'>
 											   <ul>
 											   <li>Phone:</li>
-											   <li><h4>$row[5]($row[7]GB + $row[8]GB)</h4></li>
+											   <li><h4>$row[5]($row[7]GB + $row[7]GB)</h4></li>
    											 <li>Price:</li>
 	  										 <li><h3>$row[3]</h3></li>
-  											 <li>Quantity:</li>
-  											 <li><h3>$row[6]</h3></li>
+
   											 <li><h3>Color:</h3></li>
-    										 <li><h2>$row[9]</h2></li>
+    										 <li><h2>$row[8]</h2></li>
  											 	 </ul>
+
 											 </div>
 
 										    <div class='clear'> </div>
@@ -156,10 +146,13 @@ else {
 											<h2><?php echo "$row1[5]";?></h2
 													<h2><?php echo "Phone: $row1[4]";?></h2>
 										 <h2><?php echo "$row1[0]";?></h2>
-										 <p><h3><?php echo "$row1[1], $row1[2], $row1[3]"; ?></h3><p></br></br>
-											<h4>Change Address</h4>
-
-												<form method="post">
+										 <p><h3><?php echo "$row1[1], $row1[2], $row1[3]"; ?></h3><p>
+											 	<h4>Total : <?php echo "Rs $total/-";?></h4>
+												<?php $_SESSION['pay']=$total?>
+														<form method="post">
+														<input type="submit" name="checkout" style="background-color:#1addd6;" value="Checkout">
+														</br></br>
+													<h4>Change Address</h4>
 													Phone:</br><input type="text" name="phone"></br>
 													Address:</br><input type="text" name="address"></br>
 													City:</br>
@@ -188,50 +181,44 @@ else {
 														echo "<script type='text/javascript'>alert('hi Failure!')</script>";
 														}
 											}
+											if(isset($_POST["checkout"])){
+
+												$sql="INSERT INTO order_confirm(cid,date) VALUES('$cid',CURDATE())";
+												$result=mysqli_query($con,$sql);
+												$sql1=mysqli_query($con,"SELECT oid FROM order_confirm ORDER BY oid DESC LIMIT 1");
+												$row2=mysqli_fetch_row($sql1);
+												$i=1;
+												$_SESSION['order_id']=$row2[0];
+												$query=mysqli_query($con,"select sid,pid from cart where cid='$cid'");
+												while($row=mysqli_fetch_row($query))
+											 {
+
+												 $sql="INSERT INTO checkout(oid,cid,sid,pid) VALUES('$row2[0]','$cid','$row[0]','$row[1]')";
+ 												$result=mysqli_query($con,$sql);
+												 $i=$i+1;
+											 }
+
+ 												echo "<script type='text/javascript'>alert('Click ok to transferring to you in paypal..');
+												setTimeout(function(){
+													window.location='paypal.php';
+												},4000);
+												</script>";
+
+
+											//	if($result){
+												 // header("Location: index.php");
+													//echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
+												//}
+												//else {
+												//echo "<script type='text/javascript'>alert('HiFailure!')</script>";
+												//}
+
+											}
 
 								?>
 
 					    				<div class="clear"> </div>
 					    </div>
 
-		<div class="footer">
-		<div class="wrap">
-		<div class="section group">
-		<div class="col_1_of_4 span_1_of_4">
-		<h3>Our Info</h3>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-		</div>
-		<div class="col_1_of_4 span_1_of_4">
-		<h3>Latest-News</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-		</div>
-		<div class="col_1_of_4 span_1_of_4">
-		<h3>Store Location</h3>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-		<h3>Order-online</h3>
-		<p>080-1234-56789</p>
-		<p>080-1234-56780</p>
-		</div>
-		<div class="col_1_of_4 span_1_of_4 footer-lastgrid">
-			h3>News-Letter</h3>
-					<form><input type="text"><input type="submit" value="go" /></form>
-			<h3>Follow Us:</h3>
-			<ul>
-					 	<li><a href="#"><img src="images/twitter.png" title="twitter" />Twitter</a></li>
-					 	<li><a href="#"><img src="images/facebook.png" title="Facebook" />Facebook</a></li>
-					 	<li><a href="#"><img src="images/rss.png" title="Rss" />Rss</a></li>
-			</ul>
-		  </div>
-			</div>
-		</div>
-		<div class="clear"> </div>
-		<div class="wrap">
-		<div class="copy-right">
-			<p>&copy; 2013 Mobile Store. All Rights Reserved | Design by  <a href="http://w3layouts.com/">W3Layouts</a></p>
-		</div>
-		</div>
-		</div>
 	</body>
 </html>

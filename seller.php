@@ -87,35 +87,20 @@ if(!isset($_SESSION['sess_user']))
       </style>
 </head>
 <body>
-  <div class="header">
-  <div class="clear"> </div>
-  <div class="header-top-nav">
-  <ul>
-        <li><a href="logout.php">Logout</a></li>
-        <li><a href="#">My account</a></li>
-  </ul>
-  </div>
-  <div class="clear"> </div>
-  </div>
+
   <div class="top-header">
       <div class="wrap">
-      <!----start-logo---->
-          <div class="logo" style="font-family: Segoe Script;"><a href="index.php"><h3>MyStore</h3></a></div>
-      <!----end-logo---->
-      <!----start-top-nav---->
-  <div class="top-nav">
-    <ul>
+    	<div class="logo">	<a href="index.html"><img src="images/logo.png" title="logo" /></a></div>
+    	<div class="top-nav">
+    	<ul>
       <li><a href="index.php">Home</a></li>
-      <li><a href="about.php">About</a></li>
-
-      <li><a href="store.php">Featured</a></li>
-      <li><a href="contact.php">Contact</a></li>
-    </ul>
+			<li><a href="logout.php">Logout</a></li>
+		</ul>
   </div>
   <div class="clear"> </div>
   </div>
   </div>
-    <div id="login">
+  <div id="login">
       <form method="POST">
           <table style="width:800px;">
           <tr>
