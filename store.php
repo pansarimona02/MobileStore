@@ -1,20 +1,18 @@
-
 <?php
 session_start();
 $ex=0;
 if(!isset($_SESSION['sess_user']))
 {
-		$ex=1;
+	$ex=1;
 	header("location:index.php");
 }
 $bool=0;
-	if(isset($_GET['id']))
-	{
-		$bool=1;
-		$id=$_GET['id'];
-	}
+if(isset($_GET['id']))
+{
+	$bool=1;
+	$id=$_GET['id'];
+}
 ?>
-<!DOCTYPE HTML>
 <html>
 	<head>
 		<title>Mobilestore Website Template | Store :: W3layouts</title>
@@ -34,116 +32,99 @@ $bool=0;
 		</style>
 	</head>
 	<body>
-		<div class="wrap">
-		<!----start-Header---->
-			<div class="header">
-				<div class="clear"> </div>
-				<div class="header-top-nav">
-				<ul>
-
-				</ul>
-				</div>
-			<div class="clear"> </div>
-		 </div>
-		</div>
-
-		<div class="clear"> </div>
 		<div class="top-header">
 			<div class="wrap">
 		 		<!----start-logo---->
-				<div class="logo">	<a href="index.html"><img src="images/logo.png" title="logo" /></a></div>
+				<div class="logo">	<a href="index.php"><img src="images/logo.png" title="logo" /></a></div>
 				<!----end-logo---->
 				<!----start-top-nav---->
-					<div class="top-nav">
-						<ul>
-							<li><a href="index.php">Home</a></li>
-							<?php
-								if($ex==1)
-										echo "<li><a href='login.php'>login</a></li>";
-								else {
-									echo "<li><a href='logout.php'>logout</a></li>
-												<li><a href='cart.php'><span>shopping cart</a></li>";
-								}?>
-						</ul>
-					</div>
+				<div class="top-nav">
+					<ul>
+						<li><a href="index.php">Home</a></li>
+						<?php
+						if($ex==1)
+							echo "<li><a href='login.php'>login</a></li>";
+						else {
+							echo "<li><a href='logout.php'>logout</a></li>
+							<li><a href='cart.php'><span>shopping cart</a></li>";
+						}?>
+					</ul>
+				</div>
 				<div class="clear"> </div>
 			</div>
-			</div>
+		</div>
 		<!----End-top-nav---->
 		<!----End-Header---->
-		    <div class="clear"> </div>
-		    <div class="wrap">
-		    <div class="content">
-		    <div class="content-grids">
+		<div class="clear"> </div>
+		<div class="wrap">
+			<div class="content">
+				<div class="content-grids">
 					<div id="wrap" align="center">
-
-							<?php
-							$con=mysqli_connect('localhost','root','');
-							mysqli_select_db($con,'hotspot') or die("cannot select DB");
-							if($bool==0)
-							{
+						<?php
+						$con=mysqli_connect('localhost','root','');
+						mysqli_select_db($con,'hotspot') or die("cannot select DB");
+						if($bool==0)
+						{
 							$i=1;
 							$query=mysqli_query($con,"select price,ram,image,model_name,cid,storage,model_id from model");
 							while($row=mysqli_fetch_row($query))
 							{
 								echo "<ul>
-								<li id=$i>
+									<li id=$i>
 									<img src=$row[2] class='items'style='height:250px;'/>
 									<br clear='all' />
 									<a href='single.php?mid=$row[6]'>
 									<div style='background-color:#081230; color:white; height:60px;'>$row[3]</br>Price=$row[0]/-Rs</br>($row[1]GB RAM $row[5]GB Storage)</br></div>
-							</a>	</li>
-								</ul>";
-									$i=$i+1;
-								}
-							}
-							else{
-								$i=1;
-								$query=mysqli_query($con,"select price,ram,image,model_name,cid,storage,model_id from model  where cid=$id");
-								while($row=mysqli_fetch_row($query))
-								{
-									echo "<ul>
-									<li id=$i>
-										<img src=$row[2] class='items'style='height:250px;'/>
-										<br clear='all' />
-											<a href='single.php?mid=$row[6]'>
-										<div style='background-color:#081230; color:white; height:60px;'>$row[3]</br>Price=$row[0]/-Rs</br>($row[1]GB RAM $row[5]GB Storage)</br></div>
-								</a>	</li>
+									</a></li>
 									</ul>";
-										$i=$i+1;
-									}
-								}
+									$i=$i+1;
+							}
+						}
+						else{
+							$i=1;
+							$query=mysqli_query($con,"select price,ram,image,model_name,cid,storage,model_id from model  where cid=$id");
+							while($row=mysqli_fetch_row($query))
+							{
+								echo "<ul>
+									<li id=$i>
+									<img src=$row[2] class='items'style='height:250px;'/>
+									<br clear='all' />
+									<a href='single.php?mid=$row[6]'>
+									<div style='background-color:#081230; color:white; height:60px;'>$row[3]</br>Price=$row[0]/-Rs</br>($row[1]GB RAM $row[5]GB Storage)</br></div>
+									</a></li>
+									</ul>";
+									$i=$i+1;
+							}
+						}
 						?>
+					</div>
 				</div>
-  			</div>
-				</div>
-				<?php
-					function getid($name)
-					{
-						$con=mysqli_connect('localhost','root','');
-						mysqli_select_db($con,'hotspot') or die("cannot select DB");
-						$query=mysqli_query($con,"SELECT cid FROM company WHERE comp='$name'");
-						$row=mysqli_fetch_row($query);
-						$n=$row[0];
-						return $n;
-					}
-				?>
-		    	<div class="content-sidebar">
-		    		<h4>Categories</h4>
-						<ul>
-							<li><?php $a="Asus"; $id=getid($a);echo "<a href='store.php?id=$id'>" ?>Asus Mobiles</a></li>
-							<li><?php $a="Oppo"; $id=getid($a);echo "<a href='store.php?id=$id'>" ?>Oppo Mobile</a></li>
-							<li><?php $a="Samsung"; $id=getid($a);echo "<a href='store.php?id=$id'>" ?>Samsung Mobiles</a></li>
-							<li><?php $a="Motorola"; $id=getid($a);echo "<a href='store.php?id=$id'>" ?>Motorola Mobiles</a></li>
-							<li><?php $a="Nokia"; $id=getid($a);echo "<a href='store.php?id=$id'>" ?>Nokia Mobiles</a></li>
-							<li><?php $a="Honor"; $id=getid($a);echo "<a href='store.php?id=$id'>" ?>Honor Mobiles</a></li>
-					
-						</ul>
-		    	</div>
-		    </div>
-		    <div class="clear"> </div>
-		    </div>
-
+			</div>
+			<?php
+			function getid($name)
+			{
+				$con=mysqli_connect('localhost','root','');
+				mysqli_select_db($con,'hotspot') or die("cannot select DB");
+				$query=mysqli_query($con,"SELECT cid FROM company WHERE comp='$name'");
+				$row=mysqli_fetch_row($query);
+				$n=$row[0];
+				return $n;
+			}
+			?>
+			<div class="content-sidebar">
+				<h4>Categories</h4>
+				<ul>
+					<?php
+					$con = mysqli_connect('localhost', 'root', '');
+					mysqli_select_db($con, 'hotspot') or die("cannot select DB");
+					$query = mysqli_query($con, "select cid, comp from company");
+					while($row = mysqli_fetch_row($query))	
+						echo "<li><a href='store.php?id=$row[0]'>$row[1] Mobiles</a></li>";
+					echo "<li><a href='store.php'>See All</a></li>";
+					?>
+				</ul>
+			</div>
+		</div>
 		<!--footer-->
 
 	</body>

@@ -74,7 +74,7 @@ else {
 								echo "<li><a href='login.php'>login</a></li>";
 						else {
 							echo "<li><a href='logout.php'>logout</a></li>
-							<li><a href='#'>My account</a></li>
+
 							<li><a href='cart.php'><span>shopping cart</a></li>";
 						}?>
 				</ul>
@@ -87,18 +87,17 @@ else {
 			<div class="wrap">
 		<!----start-logo---->
 			<div class="logo">
-				<a href="index.html"><img src="images/logo.png" title="logo" /></a>
+				<a href="index.php"><img src="images/logo.png" title="logo" /></a>
 			</div>
 		<!----end-logo---->
 		<!----start-top-nav---->
 		<div class="top-nav">
 			<ul>
 				<li><a href="index.php">Home</a></li>
-				<li><a href="about.php">About</a></li>
-				<li><a href="store.php">Store</a></li>
-				<li><a href="store.php">Featured</a></li>
 
-				<li><a href="contact.php">Contact</a></li>
+				<li><a href="store.php">Store</a></li>
+
+
 			</ul>
 		</div>
 		<div class="clear"> </div>

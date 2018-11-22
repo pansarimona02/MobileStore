@@ -16,40 +16,43 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     </head>
     <body>
-             <div class="header">
-                  <div class="clear"> </div>
-                  <div class="header-top-nav">
-                  <ul>
-                        <li><a href="logout.php">Logout</a></li>
-                        <li><a href="#">My account</a></li>
-                  </ul>
-                  </div>
-                  <div class="clear"> </div>
-            </div>
-        <div class="top-header">
-          <div class="wrap">
+      <div class="wrap">
+        <!----start-Header---->
+        <div class="header">
+
+          <div class="clear"> </div>
+          <div class="header-top-nav">
+
+          </div>
+          <div class="clear"> </div>
+        </div>
+      </div>
+      <div class="clear"> </div>
+      <div class="top-header">
+        <div class="wrap">
           <!----start-logo---->
-              <div class="logo" style="font-family: Segoe Script;"><a href="index.php"><h3>MyStore</h3></a></div>
+          <div class="logo">
+            <a href="index.php"><img src="images/logo.png" title="logo" /></a>
+          </div>
           <!----end-logo---->
-        <!----start-top-nav---->
+          <!----start-top-nav---->
           <div class="top-nav">
             <ul>
               <li><a href="index.php">Home</a></li>
-              <li><a href="about.php">About</a></li>
-              <li><a href="store.php">Featured</a></li>
-              <li><a href="contact.php">Contact</a></li>
+
+              <li><a href='logout.php'>logout</a></li>
             </ul>
           </div>
           <div class="clear"> </div>
-    </div>
-  </div>
+        </div>
+      </div>
         <div class="text-center">
             <a href="" class="btn btn-default bg-dark" data-toggle="modal" data-target="#modalRegisterForm" style="margin-top:5px;">Add New Model Specification </a>
         </div>
         <div class="text-center">
             <a href="" class="btn btn-default bg-dark" data-toggle="modal" data-target="#modalAddCompany" style="margin-top:5px;">Add New Company </a>
         </div>
-     
+
 <div class="modal fade" id="modalAddCompany" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -70,7 +73,7 @@
                     </div>
                 </form>
                 <?php
-                   
+
                    if(isset($_POST["add"])){
                        $c_name = $_POST["c_name"];
                        $con=mysqli_connect('localhost','root','');
@@ -83,7 +86,7 @@
                        else {
                            echo "<script type='text/javascript'>alert('Failure!')</script>";
                        }
-                   }    
+                   }
                 ?>
             </div>
         </div>
@@ -95,10 +98,10 @@
 
         <div class="row">
             <div class="col-lg-6">
-                  
+
                  <div class="my-3 p-3 bg-white rounded box-shadow">
                 <h6 class="border-bottom border-gray pb-2 mb-0">Add New Model Request</h6>
-                     
+
                  <?php
 
 	 						 $con=mysqli_connect('localhost','root','');
@@ -222,6 +225,15 @@
                                     </div>
                                 </form>
                         <?php
+							function getid($name)
+							{
+								$con=mysqli_connect('localhost','root','');
+								mysqli_select_db($con,'hotspot') or die("cannot select DB");
+								$query=mysqli_query($con,"SELECT cid FROM company WHERE comp='$name'");
+								$row=mysqli_fetch_row($query);
+								$n=$row[0];
+								return $n;
+							}
                            if(isset($_POST["send"])){
                                $model_id = $_POST["model_id"];
                                $model_name = $_POST["model_name"];
@@ -230,6 +242,7 @@
                                $color = $_POST["color"];
                                $price = $_POST["price"];
                                $c_name = $_POST["c_name"];
+							   $cid = getid($c_name);
                                $memory_slot = $_POST["memory_slot"];
                                $camera = $_POST["camera"];
                                $battery = $_POST["battery"];
@@ -240,57 +253,46 @@
                                $os = $_POST["os"];
                                $processor = $_POST["processor"];
                                $clock = $_POST["clock"];
-                                echo "<pre>";
-                               print_r( $_FILES);
-                               echo "</pre>";
-                                 if(isset($_FILES['image'])){
-                                  $errors= array();
-                                  $file_name = $_FILES['image']['name'];
-                                  $file_size =$_FILES['image']['size'];
-                                  $file_tmp =$_FILES['image']['tmp_name'];
-                                  $file_type=$_FILES['image']['type'];
-//                                  $file_ext=strtolower(end(explode('.',$_FILES['image']['name'])));
-//
-//                                  $expensions= array("jpeg","jpg","png");
-//
-//                                  if(in_array($file_ext,$expensions)=== false){
-//                                     $errors[]="extension not allowed, please choose a JPEG or PNG file.";
-//                                  }
+							   if(isset($_FILES['image'])){
+								   $errors= array();
+								   $file_name = $_FILES['image']['name'];
+								   $file_size =$_FILES['image']['size'];
+								   $file_tmp =$_FILES['image']['tmp_name'];
+								   $file_type=$_FILES['image']['type'];
+								   if($file_size > 2097152){
+									   $errors[]='File size must be excately 2 MB';
+								   }
 
-                                  if($file_size > 2097152){
-                                     $errors[]='File size must be excately 2 MB';
-                                  }
-
-                                  if(empty($errors)==true){
-                                     move_uploaded_file($file_tmp,"images/".$file_name);
-                                  }else{
+								   if(empty($errors)==true){
+									   move_uploaded_file($file_tmp,"images/".$file_name);
+								   }else{
                                      print_r($errors);
                                   }
                                   $image_name = "images/".$file_name;
                                   mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
                                   $con=mysqli_connect('localhost','root','');
                                   mysqli_select_db($con,'hotspot') or die("cannot select DB");
-                                  $sql_model="INSERT INTO model(model_id,image,model_name,ram,storage,color,price, cid) VALUES('$model_id','$image_name','$model_name',$ram,$storage,'$color',$price, 101)";
+                                  $sql_model="INSERT INTO model(model_id,image,model_name,ram,storage,color,price, cid) VALUES('$model_id','$image_name','$model_name',$ram,$storage,'$color',$price, $cid)";
                                   $sql_spe="INSERT INTO specifications(com_name,model_id,memory_slot,camera,network,battery,display_size,weight,warranty,OS,processor,clock) VALUES('$c_name','$model_id','$memory_slot','$camera','$network','$battery','$display','$weight', '$warrenty','$os','$processor','$clock')";
                                    $result_model=mysqli_query($con,$sql_model);
                                    $result_spe=mysqli_query($con,$sql_spe);
                                      if($result_model and $result_spe){
                                          mysqli_query($con,"DELETE FROM new_model_req where model_id = '$model_id'");
-                                         header("Location: admin.php");
+//                                         header("Location: admin.php");
                                        }
                                        else {
                                            echo "<script type='text/javascript'>alert('HiFailure!')</script>";
-                                       } 
+                                       }
                                }
-                              
-                           
-                           }    
+
+
+                           }
                         ?>
                     </div>
                 </div>
             </div>
         </div>
-      
+
 
 </div>
     </body>

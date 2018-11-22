@@ -4,7 +4,7 @@ if($_SESSION["paypalphp"]=="")
 {
     ?>
     <script type="text/javascript">
-        window.location="shop.php";
+        window.location="store.php";
     </script>
 <?php
 

@@ -90,7 +90,7 @@ if(!isset($_SESSION['sess_user']))
 
   <div class="top-header">
       <div class="wrap">
-    	<div class="logo">	<a href="index.html"><img src="images/logo.png" title="logo" /></a></div>
+    	<div class="logo">	<a href="index.php"><img src="images/logo.png" title="logo" /></a></div>
     	<div class="top-nav">
     	<ul>
       <li><a href="index.php">Home</a></li>
@@ -104,7 +104,7 @@ if(!isset($_SESSION['sess_user']))
       <form method="POST">
           <table style="width:800px;">
           <tr>
-            <td style="align:center;">Comapany</td>
+            <td style="align:center;">Company</td>
             <td>
             <select name="input" id="brand">
             <?php
@@ -181,7 +181,7 @@ if(!isset($_SESSION['sess_user']))
               ?>
 
 <div class="text-center">
-    <a href="" class="btn btn-default bg-dark" data-toggle="modal" data-target="#modalRegisterForm">Send Request for adding new model </a>
+    <button class="btn btn-default bg-primary" data-toggle="modal" data-target="#modalRegisterForm">Send Request for adding new model </button>
 </div>
 
 
@@ -202,8 +202,6 @@ if(!isset($_SESSION['sess_user']))
                         <label data-error="wrong" data-success="right" for="orangeForm-name">Model ID</label>
                     </div>
                     <div class="md-form mb-4">
-                                        <input type="number" id="orangeForm-pass" class="form-control validate" name="price">
-                                        <label data-error="wrong" data-success="right" for="orangeForm-pass">Price</label>
                                     </div>
                                     <div class="md-form mb-4">
                                         <select  id="orangeForm-pass" class="form-control validate" name="c_name">
@@ -249,9 +247,9 @@ if(!isset($_SESSION['sess_user']))
     </div>
 </div>
 
+	</div>
 
-
-</body>
-          <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+</body><script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </html>
